@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import logo from "../assets/DALL·E 2025-02-20 19.37.18 - A modern and sleek logo for 'TaskPilot', a task management application. The design should incorporate a stylized checkmark and an airplane or pilot th.webp"
 
 
@@ -10,10 +11,12 @@ const Navbar = () => {
         </div>
         <div className="flex gap-2">
           <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+        <Link to={'/login'}>  <button className="btn">LogIn</button></Link>
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                
               <div className="w-10 rounded-full">
-              {/* <FaCircleUser /> */}
+          
                 <img
                   alt="Tailwind CSS Navbar component"
             
