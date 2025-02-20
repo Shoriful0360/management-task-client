@@ -2,7 +2,7 @@
 
 const Banner = () => {
     return (
-        <div className="relative w-full bg-[#5C8BCE] text-white py-16 px-8 text-center min-h-screen shadow-lg">
+        <div className="relative w-full  text-white py-16 px-8 text-center min-h-full shadow-lg">
         <div className=" ">
           <h1 className="text-4xl font-bold mb-4">TaskPilot - Stay Organized & Productive</h1>
           <p className="text-lg mb-6">
