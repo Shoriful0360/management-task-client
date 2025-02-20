@@ -1,10 +1,11 @@
 import { Outlet } from "react-router";
+import Navbar from "../shared/Navbar";
 
 
 const Layout = () => {
     return (
         <div>
-            <h1>layout</h1>
+            <Navbar/>
             <Outlet></Outlet>
         </div>
     );
