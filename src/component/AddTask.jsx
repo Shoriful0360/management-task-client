@@ -10,14 +10,15 @@ const AddTask = () => {
         e.preventDefault()
         const title=e.target.title.value;
         const description=e.target.description.value;
-        const select=e.target.select.value;
+        const status=e.target.select.value;
        const email=user?.email
        const time=new Date()
-       const formInfo={title,description,email,select,time}
-    
+       const formInfo={title,description,email,status,time}
+  
        try{
      axios.post(`${import.meta.env.VITE_URL}/tasks`,formInfo)
      toast.success('Successfull')
+     e.target.reset()
        }catch (err){
 console.log(err)
        }

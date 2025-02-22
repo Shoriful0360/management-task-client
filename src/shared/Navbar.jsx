@@ -36,7 +36,8 @@ const Navbar = () => {
                   <span className="badge">New</span>
                 </a>
               </li>
-              <li><a>Settings</a></li>
+              <li><Link to={'/add-task'}>Add Task</Link></li>
+              <li><Link to={'/my-task'}>My Task</Link></li>
               <p onClick={logOut}> logout</p>
               {/* <li><a onClick={logOut()}>Logout</a></li> */}
             </ul>
