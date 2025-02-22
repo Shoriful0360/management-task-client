@@ -10,7 +10,7 @@ const Layout = () => {
          <Navbar/>
          </header>
         <main >
-      <div className="min-h-[calc(100vh-260px)] bg-[#5C8BCE]">
+      <div className="min-h-[calc(100vh-260px)] ">
       <Outlet></Outlet>
       </div>
         </main>

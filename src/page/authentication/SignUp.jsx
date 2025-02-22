@@ -6,12 +6,13 @@ import { IoEyeOffOutline } from "react-icons/io5";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../provider/AuthProvider";
+import { FcGoogle } from "react-icons/fc";
 
 
-const SignIn = () => {
+const SignUp = () => {
     const [visible,setVisible]=useState(false)
     const navigate=useNavigate()
-    const {createUser,setUser,updateUserProfile}=useContext(AuthContext)
+    const {createUser,setUser,googleLogin,profileUpdate}=useContext(AuthContext)
 
     const handleFormSubmit=async(e)=>{
         e.preventDefault()
@@ -38,7 +39,7 @@ const SignIn = () => {
       try{
         const result=await createUser(email,password)
 
-       await updateUserProfile(name,photoUrl)
+       await profileUpdate(name,photoUrl)
       setUser({...result?.user, displayName:name,photoURL:photoUrl})
       toast.success('Signup is successfuylly')
       form.reset()
@@ -50,10 +51,23 @@ const SignIn = () => {
     
     
       }
+
+    //   login with google
+    const handleGoogle=async()=>{
+        try{
+         const {user}=await googleLogin()
+         setUser(user)
+         toast.success('login is successfully')
+         navigate(location?.state?location?.state :'/')
+        }
+        catch{
+        toast.error('something is wrong')
+        }
+            }
     return (
         <div className="mt-10">
         <h1 className="text-center text-4xl font-bold">Register Now</h1>
-        <div className="hero ">
+        <div className="hero mt-10 ">
     <h1 className="text-red-800">heool</h1>
 <div className="hero-content flex-col lg:flex-row-reverse">
 
@@ -76,7 +90,7 @@ const SignIn = () => {
                     <label className="label">
                         <span className="label-text">Photo URL</span>
                     </label>
-                    <input type="url" name="photoUrl" placeholder="Enter your photo URL" className="input input-bordered" required />
+                    <input type="url" name="photoUrl" placeholder="Enter your photo URL" className="input input-bordered"  />
                 </div>
                 <div className="form-control">
                     <label className="label">
@@ -88,7 +102,7 @@ const SignIn = () => {
                     <label className="label">
                         <span className="label-text">Password</span>
                     </label>
-                    <div className='absolute right-2 top-[50px] cursor-pointer'>
+                    <div className='absolute right-2 top-[35px] cursor-pointer'>
                     {
                 visible ? <div onClick={()=>setVisible(false)}>  <GoEye></GoEye></div> :<div onClick={()=>setVisible(true)}><IoEyeOffOutline></IoEyeOffOutline> </div>
               }
@@ -108,9 +122,13 @@ const SignIn = () => {
                 </div>
               
             </form>
-  <div className='my-2'>
+  <div className='my-4 mx-4'>
     <h1>Already have an account? <Link to={'/login'}><span className='text-blue-400 text-xl font-semibold'>LogIn</span></Link></h1>
   </div>
+    <div className="divider">Log in with Google</div>
+    <div className='flex justify-center'>
+      <FcGoogle onClick={handleGoogle} className='text-5xl hover:cursor-pointer'/>
+    </div>
 </div>
 </div>
 </div>
@@ -118,4 +136,4 @@ const SignIn = () => {
     );
 };
 
-export default SignIn;
+export default SignUp;
