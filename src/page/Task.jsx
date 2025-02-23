@@ -27,11 +27,12 @@ const {data:taskData,isLoading,refetch}=useQuery({
 const todo=taskData?.filter(item=>item.status==='To-Do')
 const InProgress=taskData?.filter(item=>item.status==='In Progress')
 const done=taskData?.filter(item=>item.status==='Done')
-console.log(InProgress)
+
 if(isLoading) return <Loading/>
 // Handle Drag End
 const handleDragEnd = async (event) => {
   const { active, over } = event;
+
   if (!over) return;
 
   const draggedTask = taskData.find((task) => task._id === active.id);
@@ -39,16 +40,18 @@ const handleDragEnd = async (event) => {
 
   const newStatus =
     over.id === "to-do"
-      ? "To Do"
+      ? "To-Do"
       : over.id === "in-progress"
       ? "In Progress"
       : "Done";
 
   if (draggedTask.status !== newStatus) {
+    console.log(draggedTask._id)
     try {
-      await axios.patch(`${import.meta.env.VITE_URL}/task/${draggedTask._id}`, {
+     const {data}= await axios.patch(`${import.meta.env.VITE_URL}/tasks/${draggedTask._id}`, {
         status: newStatus,
       });
+      console.log(data)
       refetch();
     } catch (err) {
       Swal.fire(`${err.message}`);
@@ -67,7 +70,7 @@ const deleteHandler = (id) => {
     confirmButtonText: "Yes, delete it!",
   }).then(async (result) => {
     if (result.isConfirmed) {
-      await axios.delete(`${import.meta.env.VITE_URL}/task/${id}`);
+      await axios.delete(`${import.meta.env.VITE_URL}/tasks/${id}`);
       refetch();
       Swal.fire({
         title: "Deleted!",

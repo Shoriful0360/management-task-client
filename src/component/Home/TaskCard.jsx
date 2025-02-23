@@ -4,10 +4,29 @@ import { GrInProgress } from "react-icons/gr";
 import { IoMdDoneAll } from "react-icons/io";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
+import TaskModal from "./TaskModal";
+import { useState } from "react";
 const TaskCard = ({ item, deleteHandler }) => {
+  const [isOpen, setIsOpen] = useState(false);
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: item._id,
+       
       });
+
+      const formatDateTime = (time) => {
+        const date = new Date(time);
+    
+        // Extract date in YYYY-MM-DD format
+        const formattedDate = date.toISOString().split("T")[0];
+    
+        // Format time in 12-hour format with AM/PM
+        const options = { hour: "2-digit", minute: "2-digit", hour12: true };
+        const formattedTime = date.toLocaleTimeString("en-US", options);
+    
+        return `${formattedDate}, ${formattedTime}`;
+      };
+
+   
     return (
         <div
         ref={setNodeRef}
@@ -31,11 +50,9 @@ const TaskCard = ({ item, deleteHandler }) => {
             >
               {item?.status}
             </p>
-            {/* <p className="">
-              {item?.createDate
-                ? format(new Date(item?.createDate), "d MMM yyyy")
-                : ""}
-            </p> */}
+            <p className="">
+            {formatDateTime(item?.time)}
+            </p>
           </div>
         </div>
         <div className="w-1/12 flex flex-col justify-between gap-6">
@@ -49,7 +66,8 @@ const TaskCard = ({ item, deleteHandler }) => {
             {item?.status === "In Progress" && <GrInProgress />}
             {item?.status === "Done" && <IoMdDoneAll />}
           </button>
-          <button>
+          <button onMouseUp={()=>setIsOpen(true)}  >
+           
           <FaRegEdit />
           </button>
           <button
@@ -60,6 +78,8 @@ const TaskCard = ({ item, deleteHandler }) => {
             <RiDeleteBinFill />
           </button>
         </div>
+    
+        {isOpen && <TaskModal isOpen={isOpen} onClose={()=>setIsOpen(false)} />}
       </div>
     );
 };
