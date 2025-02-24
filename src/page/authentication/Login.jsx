@@ -39,7 +39,7 @@ try{
  const {user}=await googleLogin()
  setUser(user)
  toast.success('login is successfully')
- navigate(location?.state?location?.state :'/')
+ navigate(location.state?.from?.pathname || '/')
 }
 catch{
 toast.error('something is wrong')
@@ -55,8 +55,10 @@ forgetPassword(email)
 })
     }
     return (
-        <div className="mt-10">
-        <h1 className="text-center text-4xl font-bold">LogIn Now</h1>
+        <div className="mt-10 min-h-screen place-items-center grid">
+
+       <div>
+       <h1 className="text-center text-4xl underline font-bold">LogIn Now</h1>
         <div className="hero ">
 <div className="hero-content flex-col lg:flex-row-reverse">
 
@@ -97,7 +99,7 @@ forgetPassword(email)
   </div>
 </div>
 </div>
-</div>
+</div></div>
       </div>
     );
 };

@@ -6,6 +6,7 @@ import Login from "../page/authentication/Login";
 import SignUp from "../page/authentication/SignUp";
 import AddTask from "../component/AddTask";
 import Task from "../page/Task";
+import AuthPrivate from "../Private/AuthPrivate";
 
 
 const MainRoute = () => {
@@ -16,7 +17,11 @@ const MainRoute = () => {
           <Routes>
             <Route path="/" element={<Layout/>}>
                 <Route index element={<Home></Home>}></Route>
-                <Route path="/add-task" element={<AddTask/>}></Route>
+                <Route path="/add-task" element={
+                    <AuthPrivate>
+                        <AddTask/>
+                    </AuthPrivate>
+                }></Route>
                 <Route path="/my-task" element={<Task/>}></Route>
             </Route>
            

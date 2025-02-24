@@ -14,7 +14,7 @@ const Navbar = () => {
 
         </div>
         <div className="flex gap-2">
-          <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+    
           {
             user? <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -36,9 +36,13 @@ const Navbar = () => {
                   <span className="badge">New</span>
                 </a>
               </li>
+
+              <li><Link to={'/'}>Home</Link></li>
               <li><Link to={'/add-task'}>Add Task</Link></li>
               <li><Link to={'/my-task'}>My Task</Link></li>
-              <p onClick={logOut}> logout</p>
+              <li><Link  onClick={logOut}>logout</Link></li>
+        
+              
               {/* <li><a onClick={logOut()}>Logout</a></li> */}
             </ul>
           </div>
