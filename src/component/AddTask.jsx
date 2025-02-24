@@ -47,7 +47,7 @@ console.log(err)
              <h1 className="text-2xl font-bold text-white underline text-center my-4 ">Task</h1> 
        <div className="lg:w-8/12 mx-auto">
        <form className="space-y-2"  onSubmit={formSubmit} >
-        <input onChange={handleTitle} type="text" name="title" placeholder="Enter Your Task Title" className="input text-black w-full" required />
+        <input onChange={handleTitle} type="text"  name="title" placeholder="Enter Your Task Title" className="input text-black w-full" required />
 
         <textarea className="textarea w-full textarea-bordered" onChange={handleDes} required name="description" placeholder="Enter Your Task Description"></textarea>
      

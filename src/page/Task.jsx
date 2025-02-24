@@ -90,6 +90,7 @@ const deleteHandler = (id) => {
             <div className="grid grid-cols-1 gap-4">
               {todo?.map((item) => (
                 <TaskCard
+                refetch={refetch}
                   key={item._id}
                   item={item}
                   deleteHandler={deleteHandler}
@@ -105,6 +106,7 @@ const deleteHandler = (id) => {
             <div className="grid grid-cols-1 gap-4">
               {InProgress?.map((item) => (
                 <TaskCard
+                refetch={refetch}
                   key={item._id}
                   item={item}
                   deleteHandler={deleteHandler}
@@ -120,6 +122,7 @@ const deleteHandler = (id) => {
             <div className="grid grid-cols-1 gap-4">
               {done?.map((item) => (
                 <TaskCard
+                refetch={refetch}
                   key={item._id}
                   item={item}
                   deleteHandler={deleteHandler}

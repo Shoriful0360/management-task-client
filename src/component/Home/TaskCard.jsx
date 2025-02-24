@@ -6,7 +6,11 @@ import { RiDeleteBinFill } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
 import TaskModal from "./TaskModal";
 import { useState } from "react";
-const TaskCard = ({ item, deleteHandler }) => {
+import Swal from "sweetalert2";
+import axios from "axios";
+const TaskCard = ({ item, deleteHandler,refetch }) => {
+
+  const{_id,title,description,status}=item || {}
   const [isOpen, setIsOpen] = useState(false);
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: item._id,
@@ -26,7 +30,74 @@ const TaskCard = ({ item, deleteHandler }) => {
         return `${formattedDate}, ${formattedTime}`;
       };
 
+      const updateData = async (userId, updatedData) => {
+       const {textInput,textArea,selectedOption}=updatedData || {}
+     const updateDoc={
+      title:textInput,
+      description:textArea,
+      status:selectedOption
+     }
+     try{
+      await axios.patch(`${import.meta.env.VITE_URL}/tasks-update/${_id}`,updateDoc)
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Your work has been saved",
+        showConfirmButton: false,
+        timer: 1000
+      });
+      refetch()
+     }catch(err){
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err.message,
+        timer: 1000
+      });
+     }
+     
+      };
+
+   const handleEdit=async()=>{
+    const { value: formValues } = await Swal.fire({
+      title: "Edit Your Details",
+      html: `
+        <input id="swal-input" class="swal2-input custom-input" value="${title}">
+        <textarea id="swal-textarea" class="swal2-textarea custom-input">${description}</textarea>
+        <select id="swal-select" class="swal2-select custom-input">
+          <option value="To-Do" ${status === "To-Do" ? "selected" : ""}>To-Do</option>
+          <option value="In Progress" ${status === "In Progress" ? "selected" : ""}>In Progress</option>
+          <option value="Done" ${status=== "Done" ? "selected" : ""}>Done</option>
+        </select>
+      `,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: "Save Changes",
+      didOpen: () => {
+        document.querySelectorAll(".custom-input").forEach((el) => {
+          el.style.width = "90%";
+         
+        });
+      },
+      preConfirm: () => {
+        return {
+          textInput: document.getElementById("swal-input").value,
+          textArea: document.getElementById("swal-textarea").value,
+          selectedOption: document.getElementById("swal-select").value,
+        };
+      },
    
+    });
+  
+    if (formValues) {
+      await updateData(_id, formValues)
+      Swal.fire(`
+        <strong>Text Input:</strong> ${formValues.textInput} <br/>
+        <strong>Message:</strong> ${formValues.textArea} <br/>
+        <strong>Selected Option:</strong> ${formValues.selectedOption}
+      `);
+    }
+   }
     return (
         <div
         ref={setNodeRef}
@@ -66,7 +137,7 @@ const TaskCard = ({ item, deleteHandler }) => {
             {item?.status === "In Progress" && <GrInProgress />}
             {item?.status === "Done" && <IoMdDoneAll />}
           </button>
-          <button onMouseUp={()=>setIsOpen(true)}  >
+          <button onMouseUp={handleEdit}  >
            
           <FaRegEdit />
           </button>
